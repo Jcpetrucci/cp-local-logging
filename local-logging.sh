@@ -40,7 +40,7 @@ action_restartdaemon() {
 	printf "%s\n" "Performing restart fwd action" >&3
 	if [[ -n "$vs" ]]; then
 		# Stopping individual VS daemons w/ cpwd_admin is flaky at best.  We will just kill by pid and let cpwd_admin revive in time.
-		kill $(cat "${vs}/tmp/fwd.pid") >&3
+		kill $(<"${vs}/tmp/fwd.pid") >&3
 	else
 		# For FW-1 we can revive fwd nearly instantaneously.
 		cpwd_admin stop -name FWD -path "$FWDIR/bin/fw" -command "fw kill fwd" >&3
